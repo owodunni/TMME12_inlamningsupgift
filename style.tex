@@ -1,0 +1,41 @@
+%% Definitioner för vågfysikrapporten-dokument
+
+%% Text-kodning, språk samt PS-font
+\usepackage[swedish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{ae,aecompl}
+\usepackage{listings}
+\usepackage{float}
+% % bitmap-grafik
+\usepackage{graphicx}
+% % matematik
+\usepackage{mathtools}
+\usepackage{latexsym}
+\usepackage{graphicx}
+
+%% Paragrafformat
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+
+%% Format för datum
+\newcommand{\twodigit}[1]{\ifthenelse{#1<10}{0}{}{#1}}
+\newcommand{\dagensdatum}{
+\number\year-\twodigit{\number\month}-\twodigit{\number\day}}
+
+%% Sidhuvud och sidfot
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{Alexander Poole}
+\chead{Mekanik - TMME12}
+\rhead{Daniel Brattg\r{a}rd}
+\lfoot{alepo020@student.liu.se}
+\cfoot{{\ } \\ \thepage}
+\rfoot{danbr371@student.liu.se}
+
+
+
+%%Gray box
+\usepackage{mdframed}
+
+
