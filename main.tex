@@ -1,0 +1,214 @@
+\documentclass[a4paper,12pt]{article}
+
+\title{Laborationsrapport i TMME12\\ \emph{Mekanik Y del 1}}
+\author{Daniel Brattg\r{a}rd \\Alexander Poole\\}
+\input{style}
+
+%%TODO
+% Caption korrekt ? Tycker att bildtexten bör vara Swinging Atwood's machine med inritade koordinatsystem
+
+% kommentera på snörkraften, vet inte riktigt vad som skall skrivas där
+% Bifoga kod 
+
+
+% Kommentarer
+% Har ändrat figurernas labels så att dessa matchar filernas namn
+% Nämna att origo är annat än det def. koord.sys.? i fig:xy
+% Skrev in \usepackage{float} vilket ger möjlighet att tvinga bilder att stanna på exakt plats i koden vid   användande av [H] vilket är typ samma sak som [h!] men inte riktigt 
+% Har infört \newpage innan section Snörkraft och Total energi i nuläget
+
+
+%%Dokumentets början
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\newpage
+
+\pagenumbering{roman}
+
+\pagebreak
+
+\tableofcontents
+
+\pagebreak
+
+\section{Inleding}
+\pagenumbering{arabic}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.6\textwidth]{bilder/ref-ram.png}
+\caption{Swinging Atwood's machine med inritade koordinatsystem.}
+\label{fig:ref-ram}
+\end{figure}
+
+Målet med denna laboration är att visa hur systemet i figur \ref{fig:ref-ram} beter sig för olika begynnelsevillkor. Det som är av intresse är hur systemet rör sig, hur systemets snörkraft och den totala energin varierar med tiden. För att kunna lösa det så behöver systemets rörelseekvationer, uttrycken för snörkraften och systemets totala energi tas fram. 
+
+Utöver detta så vill vi även plotta hur systemet beter sig. För att göra det används Matlab för att tillverka grafer och animeringar. För att kontrollera rimligheten i svarsuttrycken utförs en dimensionsanalys. 
+
+
+%Rörelseekvationer%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Rörelseekvationer}
+
+Vid friläggning av systemet från figur \ref{fig:ref-ram} får man krafterna som kan ses i figur \ref{fig:frilag}, från dessa krafter så får man sedan ekvation \ref{ekv:l} - \ref{ekv:ne}. Där $a_r=\ddot{r}-r\dot{\theta}^2$ och $a_{\theta}=r\ddot{\theta}+2\dot{r}\dot{\theta}$ är $m_1$'s acceleration i polära korrdinater. 
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.6\textwidth]{bilder/frilag.png}
+\caption{$m_1$ och $m_2$ frillagda}
+\label{fig:frilag}
+\end{figure}
+
+\begin{equation}
+l=l_{m1}+r+h \Rightarrow \ddot{r}=-\ddot{a}_{m2}
+\label{ekv:l}
+\end{equation}
+
+\begin{equation}
+\uparrow: \ddot{a}_{m_2}m_2=-m_2 g+S
+\label{ekv:up}
+\end{equation}
+
+\begin{equation}
+\searrow: a_rm_1=-S+\cos(\theta)m_1 g
+\label{ekv:se}
+\end{equation}
+
+\begin{equation}
+\nearrow: a_\theta m_1=-\sin(\theta)m_1 g
+\label{ekv:ne}
+\end{equation}
+
+Ekvation \ref{ekv:l}, \ref{ekv:up}, \ref{ekv:se} och \ref{ekv:ne} annvänds för att ta fram diffekvationerna i ekvation \ref{ekv:diff}.
+
+\begin{equation}
+\begin{pmatrix}
+m_1+m_2& 0 \\
+0&       r  
+\end{pmatrix}
+\begin{pmatrix}
+\ddot{r} \\
+\ddot{\theta}  
+\end{pmatrix}
+=
+\begin{pmatrix}
+m_1r\dot{\theta}^2-m_2g+m_1\cos(\theta)g\\
+-sin(\theta)g-2\dot{r}\dot{\theta}
+\end{pmatrix}
+\label{ekv:diff}
+\end{equation}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.6\textwidth]{bilder/xy.png}
+\caption{$m_1$'s rörelse efter 10 sekunder. Obs! Koordinatsystemet är förskjutet h i x-led.}  
+\label{fig:xy}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.6\textwidth]{bilder/rt.png}
+\caption{r och $\theta$s variation med avsende på tiden.}
+\label{fig:rt}
+\end{figure}
+
+\subsection*{Dimensionsanalys}
+Dimensionsanalys av ekvation \ref{ekv:diff}
+
+\begin{equation}
+\ddot{r} = \frac{[kg*m*\frac{1}{s^2}-kg\frac{m}{s^2} + kg*1*\frac{m}{s^2}]}{[kg+kg]} = [\frac{m}{s^2}]
+\label{ekv:ddot_r_dim}
+\end{equation}
+
+\begin{equation}
+\ddot{\theta} = \frac{[-1*\frac{m}{s^2}-\frac{m}{s}*\frac{1}{s}]}{[m]} = [\frac{1}{s^2}]
+\label{ekv:ddot_theta_dim}
+\end{equation}
+
+
+%Snörkraft%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Snörkraft}
+Ekvation \ref{ekv:S} visar hur kraften i snöret varierar beroende på $\theta$ och $r$ och erhålls från ekvation \ref{ekv:l} och \ref{ekv:up}.
+
+\begin{equation}
+S=m_2 g + m_2 \ddot{r}
+\label{ekv:S}
+\end{equation}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.6\textwidth]{bilder/snore.png}
+\caption{Snörkraften S varierande med tiden.}
+\label{fig:snore}
+\end{figure}
+
+\subsection*{Dimensionsanalys}
+Dimensionsanalys av ekvation \ref{ekv:S}
+
+\begin{equation}
+S = [kg*\frac{m}{s^2}] + [kg*\frac{m*\frac{1}{s^2} + \frac{kg}{kg}*\frac{m}{s^2} + 1*\frac{m}{s^2}}{1+\frac{kg}{kg}}] = [\frac{kg*m}{s^2}] = [N]
+\label{ekv:S_dim}
+\end{equation}
+
+Efter dimensionsanalysen ser vi att den erhållna enheten är Newton vilket stämmer bra överens med det faktum att det är en kraft vi undersökt.
+
+
+%Energi%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Total energi}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.4\textwidth]{bilder/noll.png}
+\caption{Nollnivå för energin}
+\label{fig:noll}
+\end{figure}
+
+\begin{equation}
+E = \Delta{T} + \Delta{V_g} = m_2gr + m_1g(\frac{2*l}{3}-\cos(\theta)r) + \frac{m_2\dot{r}^2}{2} + \frac{m_1(\dot{r}^2+r^2\dot{\theta}^2)}{2}
+\label{ekv:E}
+\end{equation}
+
+För vårat system kan den totala energin, U, ersättas med mekanisk energi, E, då den endast beror av kinetisk och potentiell energi. Med nollnivån definierad enling figur \ref{fig:noll} ges E av ekvation  \ref{ekv:E}.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.6\textwidth]{bilder/energi.png}
+\caption{E plottad med avsende på tiden.}
+\label{fig:energi}
+\end{figure}
+
+Vi ser i figur \ref{fig:energi} att energin ligger väldigt nära en konstant nivå. Rent analytiskt skall energin vara konstant men dessa variationer beror på att Matlab använder sig av en numerisk lösare.
+
+\subsection*{Dimensionsanalys}
+Dimensionsanalys av ekvation \ref{ekv:E}
+
+\begin{equation}
+E = [kg*\frac{m}{s^2}*m] + [kg*\frac{m}{s^2}*(m-m)] + [kg*\frac{m^2}{s^2}] + [kg*(\frac{m^2}{s^2} + m^2\frac{1}{s^2}] = [\frac{kg*m^2}{s^2}] = [J]
+\label{ekv:E_dim}
+\end{equation}
+
+Efter dimensionsanalysen ser vi att den mekaniska energin resulterar i enheten Joule som sig bör.
+
+\pagebreak
+\section{Bilaga - kod}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{bilder/meksys_ekv.PNG}
+\label{fig:meksys}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{bilder/laboration.PNG}
+\label{fig:laboration}
+\end{figure}
+
+
+
+\end{document}
+
+
+
